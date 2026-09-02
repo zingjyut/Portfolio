@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【你的名字】的书桌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #e2d3ae;
+    --paper-deep: #d9c69c;
+    --card: #f3e9d2;
+    --ink: #2a2118;
+    --ink-soft: #4a3f2f;
+    --line: #b6a57e;
+    --red: #8b3a3a;
+    --green: #5c6b4f;
+    --blue: #435469;
+    --mustard: #a87c2a;
+    --plum: #6b4557;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    overflow-x: hidden;
+  }
+
+  /* 纸张纹理 */
+  body::before{
+    content:"";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: .5;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(0,0,0,.03) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(0,0,0,.03) 0, transparent 40%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,.015) 0px, transparent 1px, transparent 2px);
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+    z-index: 1;
+  }
+
+  /* ---------- 首页：书桌 ---------- */
+  #desk {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 72px 32px 100px;
+  }
+
+  .masthead {
+    margin-bottom: 64px;
+  }
+
+  .masthead h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    margin: 0 0 14px;
+    letter-spacing: .01em;
+  }
+
+  .masthead p {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 0;
+  }
+
+  .drawer {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 28px 20px;
+  }
+
+  .card {
+    grid-column: span 3;
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 26px 24px 22px;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 0 6px 14px rgba(42,33,24,.12);
+    transition: transform .35s ease, box-shadow .35s ease;
+    position: relative;
+  }
+
+  .card:nth-child(1){ transform: rotate(-1.6deg); }
+  .card:nth-child(2){ transform: rotate(1.1deg); }
+  .card:nth-child(3){ transform: rotate(0.8deg); grid-column: span 2; }
+  .card:nth-child(4){ transform: rotate(-0.9deg); grid-column: span 2; }
+  .card:nth-child(5){ transform: rotate(1.6deg); grid-column: span 2; }
+
+  .card:hover, .card:focus-visible {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow: 0 14px 26px rgba(42,33,24,.18);
+    outline: none;
+  }
+
+  .pin {
+    position: absolute;
+    top: -8px;
+    left: 22px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 2px 3px rgba(0,0,0,.3);
+  }
+
+  .card .cat-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    line-height: 1.4;
+  }
+
+  .card p {
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .desk-footer {
+    margin-top: 80px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  /* ---------- 详情页 ---------- */
+  #detail {
+    display: none;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 32px 120px;
+  }
+
+  #detail.active { display: block; }
+  #desk.hidden { display: none; }
+
+  .back-link {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13.5px;
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+  }
+
+  .back-link:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+  .detail-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  #detail h1 {
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 600;
+    margin: 0 0 22px;
+  }
+
+  .detail-intro {
+    font-size: 16px;
+    line-height: 2;
+    color: var(--ink-soft);
+    margin-bottom: 48px;
+    max-width: 58ch;
+  }
+
+  .rule {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 0 0 40px;
+  }
+
+  .work {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .work:last-child { border-bottom: none; }
+
+  .work-main h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 8px;
+  }
+
+  .work-main p {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  .work-meta {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .drawer { grid-template-columns: 1fr; }
+    .card, .card:nth-child(3), .card:nth-child(4), .card:nth-child(5) { grid-column: span 1; transform: rotate(0deg) !important; }
+    .work { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <section id="desk">
+    <div class="masthead">
+      <h1>【你的名字】的书桌</h1>
+      <p>这里收着这几年写下的东西——有的写给玩家，有的写给舞台，有的只写给自己。点开任意一叠，就是一段具体的经历。</p>
+    </div>
+
+    <div class="drawer">
+      <!-- 卡片内容均为占位，替换成你自己的分类和简介 -->
+      <button class="card" data-target="game" style="border-top: 3px solid var(--red);">
+        <span class="pin" style="background:var(--red);"></span>
+        <span class="cat-label">游戏文案</span>
+        <h2>在规则里写故事</h2>
+        <p>为几款独立游戏写过主线文案与角色对白，习惯先想清楚"玩家在这一刻应该感受到什么"。</p>
+      </button>
+
+      <button class="card" data-target="script" style="border-top: 3px solid var(--green);">
+        <span class="pin" style="background:var(--green);"></span>
+        <span class="cat-label">剧本创作</span>
+        <h2>台词是留白的艺术</h2>
+        <p>写过话剧短剧与一部长篇剧本的初稿，更喜欢让人物在沉默里说话。</p>
+      </button>
+
+      <button class="card" data-target="fiction" style="border-top: 3px solid var(--blue);">
+        <span class="pin" style="background:var(--blue);"></span>
+        <span class="cat-label">小说与短篇</span>
+        <h2>虚构练习</h2>
+        <p>几篇发表过和没发表过的短篇，主题大多围绕"没说出口的话"。</p>
+      </button>
+
+      <button class="card" data-target="review" style="border-top: 3px solid var(--mustard);">
+        <span class="pin" style="background:var(--mustard);"></span>
+        <span class="cat-label">评论与随笔</span>
+        <h2>作为读者写作</h2>
+        <p>写影评、乐评和书评，把"喜欢"这件事说清楚，是我比较擅长的事。</p>
+      </button>
+
+      <button class="card" data-target="poetry" style="border-top: 3px solid var(--plum);">
+        <span class="pin" style="background:var(--plum);"></span>
+        <span class="cat-label">诗与散记</span>
+        <h2>日常的边角料</h2>
+        <p>零碎的诗和随笔，记录一些不成体系、但舍不得删掉的句子。</p>
+      </button>
+    </div>
+
+    <div class="desk-footer">
+      联系方式：【你的邮箱】　·　【你的社交账号，可选】
+    </div>
+  </section>
+
+  <section id="detail">
+    <button class="back-link" onclick="goHome()">回到书桌</button>
+    <div class="detail-label" id="detail-label"></div>
+    <h1 id="detail-title"></h1>
+    <p class="detail-intro" id="detail-intro"></p>
+    <hr class="rule">
+    <div id="detail-works"></div>
+  </section>
+
+</div>
+
+<script>
+  const data = {
+    game: {
+      label: "游戏文案",
+      color: "var(--red)",
+      title: "在规则里写故事",
+      intro: "游戏文案的难点从来不是文字本身，而是文字要为系统让路——怎么在有限的字数、固定的交互节点里，还能让人物立住。这几年主要做角色对白、支线剧情和世界观文档。",
+      works: [
+        { title: "【项目名称】主线剧情", meta: "2024 · 独立游戏", desc: "负责三章主线的对白与分支剧情设计，处理了一条多结局的支线。" },
+        { title: "【项目名称】角色设定集", meta: "2023 · 世界观文档", desc: "为五个主要角色撰写背景故事与语言风格指南，供团队统一使用。" },
+        { title: "【项目名称】新手引导文案", meta: "2023 · UI 文案", desc: "重写了原本生硬的教程文本，用角色口吻替代系统提示。" }
+      ]
+    },
+    script: {
+      label: "剧本创作",
+      color: "var(--green)",
+      title: "台词是留白的艺术",
+      intro: "写剧本让我重新理解了"少即是多"——舞台上，没说出口的话往往比台词本身更重要。目前完成过几部短剧和一部长篇剧本的初稿。",
+      works: [
+        { title: "【剧本名称】", meta: "2024 · 独幕话剧", desc: "在【剧场/比赛名称】完成过一次读剧，探讨两代人之间的沉默。" },
+        { title: "【剧本名称】", meta: "2023 · 长篇剧本（初稿）", desc: "三幕结构，围绕一场没有发生的告别展开。" }
+      ]
+    },
+    fiction: {
+      label: "小说与短篇",
+      color: "var(--blue)",
+      title: "虚构练习",
+      intro: "短篇小说是我最早开始写、也最舍不得放下的形式。大多数故事都在处理同一个问题：一句话没说出口，后来发生了什么。",
+      works: [
+        { title: "【短篇标题】", meta: "2024 · 发表于【刊物/平台】", desc: "一句话简介，讲清楚故事的核心处境即可，不用剧透结局。" },
+        { title: "【短篇标题】", meta: "2023 · 未发表", desc: "同上。" }
+      ]
+    },
+    review: {
+      label: "评论与随笔",
+      color: "var(--mustard)",
+      title: "作为读者写作",
+      intro: "写评论是我练习"讲清楚一个判断"的方式——不只是说喜欢或不喜欢，而是说清楚为什么。",
+      works: [
+        { title: "【文章标题】", meta: "2024 · 影评", desc: "一句话说明这篇文章的核心观点。" },
+        { title: "【文章标题】", meta: "2023 · 乐评", desc: "同上。" }
+      ]
+    },
+    poetry: {
+      label: "诗与散记",
+      color: "var(--plum)",
+      title: "日常的边角料",
+      intro: "这部分更私人一些，是一些不成体系、但舍不得删掉的句子和片段。",
+      works: [
+        { title: "【作品标题】", meta: "2024", desc: "简短说明或直接留空，让文字自己说话。" }
+      ]
+    }
+  };
+
+  const desk = document.getElementById('desk');
+  const detail = document.getElementById('detail');
+
+  function renderDetail(key){
+    const d = data[key];
+    if(!d) return;
+    document.getElementById('detail-label').textContent = d.label;
+    document.getElementById('detail-label').style.color = d.color;
+    document.getElementById('detail-title').textContent = d.title;
+    document.getElementById('detail-intro').textContent = d.intro;
+
+    const worksEl = document.getElementById('detail-works');
+    worksEl.innerHTML = '';
+    d.works.forEach(w => {
+      const row = document.createElement('div');
+      row.className = 'work';
+      row.innerHTML = `
+        <div class="work-main">
+          <h3>${w.title}</h3>
+          <p>${w.desc}</p>
+        </div>
+        <div class="work-meta">${w.meta}</div>
+      `;
+      worksEl.appendChild(row);
+    });
+
+    desk.classList.add('hidden');
+    detail.classList.add('active');
+    window.scrollTo(0,0);
+    history.pushState({view: key}, '', '#' + key);
+  }
+
+  function goHome(){
+    desk.classList.remove('hidden');
+    detail.classList.remove('active');
+    window.scrollTo(0,0);
+    history.pushState({view: 'home'}, '', '#');
+  }
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => renderDetail(card.dataset.target));
+  });
+
+  window.addEventListener('popstate', (e) => {
+    const view = e.state ? e.state.view : 'home';
+    if(view === 'home') { goHome(); }
+    else { renderDetail(view); }
+  });
+
+  // 支持直接用链接打开某个板块，例如 portfolio.html#game
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = location.hash.replace('#','');
+    if(hash && data[hash]) renderDetail(hash);
+  });
+</script>
+
+</body>
+</html>
