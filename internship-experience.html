@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<!--
+	详情页模板 —— 「Internship Experience / 实习经历」
+	这版用「细长分割线照片」隔开每段经历，不是方形图片
+-->
+<html>
+	<head>
+		<title>Internship Experience – Bao Jingyue</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			/* 分割线照片：细长横条，不是方形大图，用来隔开每段经历 */
+			.divider-photo {
+				display: block;
+				width: 100%;
+				height: 120px;
+				object-fit: cover;
+				margin: 44px 0;
+				box-shadow: 0 1px 0 rgba(0,0,0,.08), 0 -1px 0 rgba(0,0,0,.08);
+			}
+
+			/* 没有图片文件时自动隐藏这一条，不留空白破洞 */
+			.divider-photo.is-missing { display: none; }
+
+			.exp-block h3 {
+				margin-bottom: 4px;
+			}
+
+			.exp-meta {
+				color: #999;
+				font-size: 0.9em;
+				margin-bottom: 14px;
+				display: block;
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- 顶部：和首页保持一致 -->
+		<header id="header">
+			<div class="inner">
+				<a href="index.html" class="image avatar"><img src="images/avatar.jpg" alt="" /></a>
+				<h1><strong>Internship Experience</strong><br />
+				过去的实习工作经验。</h1>
+			</div>
+		</header>
+
+		<div id="main">
+
+			<!-- 引言：换成你自己的一段自述 -->
+			<section id="one">
+				<header class="major">
+					<h2>在真实的工作里学到的事</h2>
+				</header>
+				<p>这里整理的是几段实习经历——具体做过什么、遇到过什么问题、又是怎么处理的。比起罗列职责，我更想写清楚每段经历里让我真正学到东西的部分。</p>
+			</section>
+
+			<!-- 经历列表：每段经历后面跟一条分割线照片 -->
+			<!-- 复制「exp-block + 分割线照片」这一整组，就能新增一段经历 -->
+			<section id="two">
+
+				<div class="exp-block">
+					<h3>【公司 / 机构名称】· 【职位名称】</h3>
+					<span class="exp-meta">【起止时间】</span>
+					<p>写清楚具体做了什么，比如负责哪部分内容、参与过哪些项目。可以举一个具体的例子，比如某次你独立完成的一篇稿子、一次内容策划，讲讲当时的思考过程和最后的结果。</p>
+				</div>
+
+				<img class="divider-photo" src="images/divider-01.jpg" alt="" onerror="this.classList.add('is-missing')">
+
+				<div class="exp-block">
+					<h3>【公司 / 机构名称】· 【职位名称】</h3>
+					<span class="exp-meta">【起止时间】</span>
+					<p>第二段经历。可以写和第一段不同性质的收获，比如这次学到的是某种具体技能，或者是一次印象深刻的合作 / 冲突，怎么处理的。</p>
+				</div>
+
+				<img class="divider-photo" src="images/divider-02.jpg" alt="" onerror="this.classList.add('is-missing')">
+
+				<div class="exp-block">
+					<h3>【公司 / 机构名称】· 【职位名称】</h3>
+					<span class="exp-meta">【起止时间】</span>
+					<p>第三段经历，可以写得更简短一些，作为收尾。</p>
+				</div>
+
+			</section>
+
+			<!-- 返回按钮 -->
+			<section id="three">
+				<ul class="actions">
+					<li><a href="index.html" class="button">返回作品集</a></li>
+				</ul>
+			</section>
+
+		</div>
+
+		<!-- 底部：和首页保持一致 -->
+		<footer id="footer">
+			<div class="inner">
+				<ul class="icons">
+					<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; Bao Jingyue</li>
+				</ul>
+			</div>
+		</footer>
+
+		<!-- 脚本：和首页保持一致 -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.poptrox.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
