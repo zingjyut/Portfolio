@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>话剧创作实践 – Bao Jingyue</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        /* 时间轴样式 —— 沿用原网站的配色和字体 */
+        .timeline {
+            list-style: none;
+            margin: 2em 0 0 0;
+            padding: 0 0 0 2.2em;
+            position: relative;
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0.55em;
+            top: 0.4em;
+            bottom: 0.4em;
+            border-left: 2px solid #49bf9d; /* 原网站的绿色 */
+        }
+        .timeline li {
+            position: relative;
+            margin-bottom: 2.2em;
+            padding-left: 1.6em;
+        }
+        .timeline li::before {
+            content: "";
+            position: absolute;
+            left: -2.2em;
+            top: 0.55em;
+            width: 0.8em;
+            height: 0.8em;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #49bf9d;
+        }
+        .timeline li.key::before {
+            background: #49bf9d;
+            box-shadow: 0 0 0 4px rgba(73, 191, 157, 0.15);
+        }
+        .timeline .stage {
+            font-size: 0.8em;
+            color: #b2b2b2;
+            margin: 0 0 0.2em 0;
+            letter-spacing: 0.05em;
+        }
+        .timeline h3 {
+            font-size: 1.1em;
+            margin: 0 0 0.4em 0;
+            color: #787878;
+        }
+        .timeline .badge {
+            display: inline-block;
+            font-size: 0.7em;
+            background: #49bf9d;
+            color: #fff;
+            padding: 0.1em 0.7em;
+            border-radius: 999px;
+            margin-left: 0.6em;
+            vertical-align: 0.15em;
+            font-weight: 400;
+        }
+        .timeline .todo {
+            border: 1.5px dashed #d9cfba;
+            color: #b2b2b2;
+            padding: 0.5em 0.9em;
+            font-size: 0.85em;
+            margin: 0.6em 0;
+        }
+        .timeline .photo {
+            margin-top: 0.6em;
+            border: 1.5px dashed #49bf9d;
+            background: rgba(73, 191, 157, 0.06);
+            color: #b2b2b2;
+            min-height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1em;
+            font-size: 0.85em;
+            border-radius: 0.35em;
+        }
+        .timeline .photo img {
+            max-width: 100%;
+            display: block;
+            border-radius: 0.35em;
+        }
+        .project-tabs {
+            display: flex;
+            gap: 0.6em;
+            flex-wrap: wrap;
+            margin: 1.5em 0 0.5em 0;
+        }
+        .project-tabs button {
+            font: inherit;
+            font-size: 0.85em;
+            padding: 0.4em 1.1em;
+            border: 1.5px solid #787878;
+            background: transparent;
+            color: #787878;
+            cursor: pointer;
+            border-radius: 999px;
+            transition: all 0.2s;
+        }
+        .project-tabs button[aria-selected="true"] {
+            background: #49bf9d;
+            border-color: #49bf9d;
+            color: #fff;
+        }
+        .project-tabs button:hover {
+            border-color: #49bf9d;
+            color: #49bf9d;
+        }
+        .project-tabs button[aria-selected="true"]:hover {
+            color: #fff;
+        }
+        .hook {
+            border-left: 4px solid #49bf9d;
+            background: rgba(73, 191, 157, 0.08);
+            padding: 0.8em 1.2em;
+            margin: 0 0 0.5em 0;
+            color: #787878;
+        }
+        .project-meta {
+            color: #b2b2b2;
+            font-size: 0.85em;
+            margin: 0 0 1.5em 0;
+        }
+    </style>
+</head>
+<body class="is-preload">
+
+    <!-- 顶部：和首页保持一致 -->
+    <header id="header">
+        <div class="inner">
+            <a href="index.html" class="image avatar"><img src="images/bayley.jpg" alt="" /></a>
+            <h1><strong>Drama Practice</strong><br />
+            话剧创作实践：从剧本到舞台。</h1>
+        </div>
+    </header>
+
+    <div id="main">
+
+        <!-- 引言 -->
+        <section id="one">
+            <header class="major">
+                <h2>从剧本到舞台</h2>
+            </header>
+            <p>这里记录两部话剧 / 音乐剧选段的创作过程——从立意、剧本、修改、选角到排练和演出，每一步我具体做了什么、遇到了什么问题、又是怎么解决的。点击上方标签可以切换项目。</p>
+        </section>
+
+        <!-- 时间轴 -->
+        <section id="two">
+            <div class="project-tabs" role="tablist" id="tabs"></div>
+            <div id="view"></div>
+        </section>
+
+        <!-- 返回按钮 -->
+        <section id="three">
+            <ul class="actions">
+                <li><a href="index.html" class="button">返回作品集</a></li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- 底部 -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Bao Jingyue</li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- 脚本 -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.poptrox.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- 时间轴数据与渲染逻辑 -->
+    <script>
+    /* ===== 在这里改内容 =====
+       key:true  → 标为“我的决策点”（实心节点 + 徽章）
+       todo      → 待回忆的提示，写完后删掉这一行
+       photo     → 配图说明，有真实图片时换成 <img src="...">  */
+    var PROJECTS = [
+      {
+        id: "xian",
+        tab: "《线》",
+        title: "《线》",
+        hook: "一部关于成长与自我选择的校园原创话剧：当家庭期待、评价体系与亲密关系同时拉扯，一个人如何找回自己的声音。",
+        meta: "校园原创话剧　2021.5",
+        steps: [
+          { stage: "第一步", name: "立意与构思", text: "围绕“个人成长与自我选择”确定主题，以女主角航思的成长经历为线索。", todo: "主题是怎么定下来的？你提出过哪些想法？", photo: "构思讨论的照片或笔记" },
+          { stage: "第二步", name: "剧本共创", text: "参与剧本的共同创作，梳理人物关系。面对父母、老师和伴侣，航思不是简单反抗，而是依据关系与责任做出不同反应。", key: true, todo: "你负责了哪几场戏？", photo: "剧本批注手稿" },
+          { stage: "第三步", name: "修改打磨", text: "多轮修改内容、调整部分剧情，让人物的行为都有心理动机可循。", todo: "写一个具体的修改：改了哪场戏，为什么改，改完有什么不同", photo: "修改稿对比" },
+          { stage: "第四步", name: "选角", text: "剧本定稿后进入选角，并出演女主角航思。", todo: "如何选角？你是怎么拿到航思这个角色的？", photo: "选角或围读现场" },
+          { stage: "第五步", name: "排练与舞台设计", text: "塑造角色，同时参与舞台呈现设计。", todo: "排练多久？舞台设计具体做了什么（走位、灯光、场景）？", photo: "排练照" },
+          { stage: "第六步", name: "正式演出", text: "2021 年 5 月演出，全体演职人员谢幕合影。", photo: "演出与谢幕照" }
+        ]
+      },
+      {
+        id: "hong",
+        tab: "《摇滚红与黑》",
+        title: "《摇滚红与黑》选段",
+        hook: "改编自司汤达《红与黑》，用音乐与现代舞台语言，呈现个人欲望、阶级身份与爱情选择之间的冲突。",
+        meta: "音乐剧选段　2022.5　饰演：玛蒂尔德·德·拉莫尔",
+        steps: [
+          { stage: "第一步", name: "研读原著与剧本", text: "阅读原著与改编剧本，梳理人物背景与情感动机。", photo: "读书笔记" },
+          { stage: "第二步", name: "角色设计", text: "抓住玛蒂尔德的矛盾：骄傲与脆弱并存，渴望自由却依赖贵族身份，执着于真实的爱情，却总沉浸在自我想象里。", key: true, todo: "你为她设计过哪个具体的动作或表情？", photo: "角色分析手稿" },
+          { stage: "第三步", name: "排练", text: "通过台词、动作和舞台调度呈现角色的变化。", todo: "有无导演指导？调整过哪处表演？", photo: "排练照" },
+          { stage: "第四步", name: "团队协作", text: "与团队配合，完成音乐、表演与舞台呈现。", todo: "合作中遇到过什么问题，怎么解决？", photo: "合练照" },
+          { stage: "第五步", name: "正式演出", text: "2022 年 5 月登台演出。", photo: "演出照（保持打码或用远景）" }
+        ]
+      }
+    ];
+
+    /* ===== 以下无需修改 ===== */
+    var tabs = document.getElementById("tabs"), view = document.getElementById("view");
+
+    function el(t, c, x) {
+      var e = document.createElement(t);
+      if (c) e.className = c;
+      if (x) e.textContent = x;
+      return e;
+    }
+
+    function render(id) {
+      var p = PROJECTS.filter(function (q) { return q.id === id; })[0] || PROJECTS[0];
+      Array.prototype.forEach.call(tabs.children, function (b) {
+        b.setAttribute("aria-selected", b.dataset.id === p.id);
+      });
+      view.textContent = "";
+      view.appendChild(el("p", "hook", p.hook));
+      view.appendChild(el("p", "project-meta", p.meta));
+      var ol = el("ol", "timeline");
+      p.steps.forEach(function (s) {
+        var li = el("li", s.key ? "key" : "");
+        li.appendChild(el("p", "stage", s.stage));
+        var h = el("h3", "", s.name);
+        if (s.key) h.appendChild(el("span", "badge", "我的决策点"));
+        li.appendChild(h);
+        var b = el("div", "body");
+        b.appendChild(el("p", "", s.text));
+        if (s.todo) b.appendChild(el("div", "todo", "待回忆：" + s.todo));
+        if (s.photo) b.appendChild(el("div", "photo", "【配图】" + s.photo));
+        li.appendChild(b);
+        ol.appendChild(li);
+      });
+      view.appendChild(ol);
+    }
+
+    PROJECTS.forEach(function (p) {
+      var b = el("button", "", p.tab);
+      b.setAttribute("role", "tab");
+      b.dataset.id = p.id;
+      b.onclick = function () {
+        render(p.id);
+        try { history.replaceState(null, "", "#" + p.id); } catch (e) {}
+      };
+      tabs.appendChild(b);
+    });
+
+    render(location.hash.slice(1));
+    </script>
+
+</body>
+</html>
