@@ -265,7 +265,9 @@
         if (s.key) h.appendChild(el("span", "badge", "我的决策点"));
         li.appendChild(h);
         var b = el("div", "body");
-        b.appendChild(el("p", "", s.text));
+        var textP = document.createElement("p");
+textP.innerHTML = s.text;
+b.appendChild(textP);
         if (s.todo) b.appendChild(el("div", "todo", "待回忆：" + s.todo));
         if (s.photo) b.appendChild(el("div", "photo", "【配图】" + s.photo));
         li.appendChild(b);
